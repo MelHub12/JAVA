@@ -1,0 +1,91 @@
+/* (Process large dataset) A univesity posts its employees'  salaries at
+   http:cs:armstrong.edu/liang/data/Salary.txt. Each line in the file consists 
+   of a faculty member's first name, last name, rank, and salary. (See 
+   Programming Exercise 12.24). Write a program to display the total salary 
+   for assistant professors, associate professors, full professors, and all
+   faculty, respectively, and display the average salary for assistant
+   processors, associate professors, full professors, and all faculty,  
+   respectively.
+
+*/
+
+package chapter.pkg12.exercise.pkg25;
+import java.util.*;
+public class Chapter12Exercise25 {
+    public static void main(String[] args) throws Exception {
+        // name[First Name][Last Name]
+        String name[][] = new String[1000][2];
+        
+        // Define arraylists
+        ArrayList<Double> full = new ArrayList<>();
+        ArrayList<Double> assistant = new ArrayList<>();
+        ArrayList<Double> associate = new ArrayList<>();
+        ArrayList<Double> faculty = new ArrayList<>();
+        
+        // Define averages and totals
+        double fullTotal = 0;
+        double assistantTotal = 0;
+        double associateTotal = 0;
+        double facultyTotal = 0;
+        double fullAvg = 0;
+        double assistantAvg = 0;
+        double associateAvg = 0;
+        double facultyAvg = 0;
+        
+        // Define a new file
+        java.io.File file = new java.io.File("Salary.txt");
+        
+        // Create a scanner to input contents of the file in an array
+        Scanner input = new Scanner(file);
+        
+        // input contents of the file in an array
+        for (int i = 0; input.hasNext(); i++) {
+            name[i][0] = input.next();
+            name[i][1] = input.next();
+            switch (input.next()) {
+                case "full":
+                    full.add(input.nextDouble());
+                    faculty.add(full.get(full.size() - 1));
+                    break;
+                case "assistant":
+                    assistant.add(input.nextDouble());
+                    faculty.add(assistant.get(assistant.size() - 1));
+                    break;
+                case "associate":
+                    associate.add(input.nextDouble());
+                    faculty.add(associate.get(associate.size() - 1));
+                    break;
+            }
+        }
+        
+        // Sum the totals
+        for (int i = 0; i < full.size(); i++) {
+            fullTotal += full.get(i);
+            facultyTotal += full.get(i);
+        }
+        
+        for (int i = 0; i < assistant.size(); i++) {
+            assistantTotal += assistant.get(i);
+            facultyTotal += assistant.get(i);
+        }
+        
+        for (int i = 0; i < associate.size(); i++) {
+            associateTotal += associate.get(i);
+            facultyTotal += associate.get(i);
+        }
+        
+        // Calculate averages
+        fullAvg = fullTotal / full.size();
+        assistantAvg = assistantTotal / assistant.size();
+        associateAvg = associateTotal / associate.size();
+        facultyAvg = facultyTotal / faculty.size();
+        
+        // Display totals and averages of the jobs
+        System.out.printf("%1s%15s%20s\n", "Job Description", "Total", "Average");
+        System.out.printf("%1s%14.2f%16.2f\n", "Full-Time Professors: ", fullTotal, fullAvg);
+        System.out.printf("%1s%14.2f%15.2f\n", "Assistant Professors: ", assistantTotal, assistantAvg);
+        System.out.printf("%1s%14.2f%15.2f\n", "Associate Professors: ", associateTotal, associateAvg);
+        System.out.printf("%1s%23.2f%15.2f\n", "All Faculty: ", facultyTotal, facultyAvg);
+    }
+    
+}
